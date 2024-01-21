@@ -15,9 +15,8 @@
   "author": "Galib Kasumov <bvomusak01@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "simplelightbox": "^2.14.2",
     "vite-plugin-full-reload": "^1.0.5",
     "vite-plugin-html-inject": "^1.0.1"
-  },
-  "main": "1-gallery.js",
-  "description": ""
+  }
 }

@@ -55,7 +55,7 @@
   margin-bottom: 16px;
 }
 
-.form-container {
+div.container.form-container {
   margin: 0 auto;
   width: min-content;
   padding-top: 50px;

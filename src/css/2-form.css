@@ -81,9 +81,9 @@
 }
 
 .form-container {
-    width: min-content;
-    border: 1px solid #4e75ff;
-    border-radius: 8px;
-    padding: 20px;
-     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: min-content;
+  border: 1px solid #4e75ff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }

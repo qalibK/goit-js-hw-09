@@ -57,6 +57,7 @@
 
 .form-container {
   margin: 0 auto;
+  width: min-content;
   padding-top: 50px;
 }
 

@@ -27,5 +27,26 @@
 }
 
 .gallery-container {
-    max-width: 1158px;
+  max-width: 1158px;
+}
+
+div.sl-overlay {
+  background: #2e2f42;
+}
+
+.sl-wrapper button.sl-close {
+  color: #fff;
+}
+
+.sl-wrapper div.sl-navigation button {
+  color: #fff;
+}
+
+.sl-wrapper div.sl-counter {
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
 }

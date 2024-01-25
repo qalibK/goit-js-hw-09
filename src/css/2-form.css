@@ -42,7 +42,6 @@
   transition: border 0.5s;
   resize: none;
   padding: 8px 16px;
-  caret-color: transparent;
   transition: 1s;
 }
 

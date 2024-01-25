@@ -1,60 +1,56 @@
 const LS_KEY = 'feedback-form-state';
 
 const formEl = document.querySelector('.feedback-form');
-const emailInputEl = formEl.querySelector('.input-email');
-const textareaEl = formEl.querySelector('textarea');
+const formEmailInput = document.querySelector('.input-email');
+const formMessageInput = document.querySelector('.input-message');
 
 formEl.addEventListener('submit', onFormSubmit);
-formEl.addEventListener('input', onInput);
+formEmailInput.addEventListener('input', onInput);
+formMessageInput.addEventListener('input', onInput);
 
-populateFormSubmit();
+populateInputFields();
 
 function onFormSubmit(e) {
   e.preventDefault();
-
-  const email = emailInputEl.value.trim();
-  const message = textareaEl.value.trim();
+  const email = formEmailInput.value.trim();
+  const message = formMessageInput.value.trim();
 
   if (email && message) {
-    const formData = { email, message };
-    localStorage.setItem(LS_KEY, JSON.stringify(formData));
-
-    console.log('Form data from localStorage:', formData);
-
-    formEl.reset();
+    console.log(getFormDataValue());
+    localStorage.removeItem(LS_KEY);
+    e.currentTarget.reset();
   } else {
-    alert('Please fill in both email and message fields.');
+    alert('Please fill all fields');
   }
 }
 
 function onInput(e) {
-  const inputType = e.target === emailInputEl ? 'email' : 'message';
-  const value = e.target.value.trim();
+  const email = formEmailInput.value.trim();
+  const message = formMessageInput.value.trim();
 
-  const savedData = getFormDataFromLocalStorage();
-  savedData[inputType] = value;
-
-  localStorage.setItem(LS_KEY, JSON.stringify(savedData));
+  const formData = { email, message };
+  localStorage.setItem(LS_KEY, JSON.stringify(formData));
 }
 
-function populateFormSubmit() {
-  const savedData = getFormDataFromLocalStorage();
-
-  if (savedData.email) {
-    emailInputEl.value = savedData.email;
-  }
-
-  if (savedData.message) {
-    textareaEl.value = savedData.message;
-  }
-}
-
-function getFormDataFromLocalStorage() {
+function getFormDataValue() {
   const savedData = localStorage.getItem(LS_KEY);
+
   return savedData ? JSON.parse(savedData) : {};
 }
 
-//? Поле для textarea
+function populateInputFields() {
+  const savedData = getFormDataValue();
+
+  if (savedData.email) {
+    formEmailInput.value = savedData.email;
+  }
+
+  if (savedData.message) {
+    formMessageInput.value = savedData.message;
+  }
+}
+
+//? Type area in input
 
 const inputEl = document.querySelectorAll('.form-input');
 

@@ -1,24 +1,11 @@
-const inputEl = document.querySelectorAll('.form-input');
-
-inputEl.forEach(function (element) {
-  element.addEventListener('focus', function onInputFocus(event) {
-    element.setAttribute('placeholder', 'Type area');
-  }),
-    element.addEventListener('blur', function onInputBlur(event) {
-      element.removeAttribute('placeholder');
-    });
-});
-
-const EMAIL_STORAGE_KEY = 'feedback-form-email';
-const MESSAGE_STORAGE_KEY = 'feedback-form-message';
+const LS_KEY = 'feedback-form-state';
 
 const formEl = document.querySelector('.feedback-form');
 const emailInputEl = formEl.querySelector('.input-email');
 const textareaEl = formEl.querySelector('textarea');
 
 formEl.addEventListener('submit', onFormSubmit);
-emailInputEl.addEventListener('input', onEmailInput);
-textareaEl.addEventListener('input', onTextareaInput);
+formEl.addEventListener('input', onInput);
 
 populateFormSubmit();
 
@@ -29,35 +16,53 @@ function onFormSubmit(e) {
   const message = textareaEl.value.trim();
 
   if (email && message) {
-    localStorage.removeItem(EMAIL_STORAGE_KEY);
-    localStorage.removeItem(MESSAGE_STORAGE_KEY);
+    const formData = { email, message };
+    localStorage.setItem(LS_KEY, JSON.stringify(formData));
+
+    console.log('Form data from localStorage:', formData);
 
     formEl.reset();
   } else {
-      alert('Please fill in both email and message fields.');
+    alert('Please fill in both email and message fields.');
   }
 }
 
-function onEmailInput(e) {
-  const email = e.currentTarget.value.trim();
-  localStorage.setItem(EMAIL_STORAGE_KEY, email);
-}
+function onInput(e) {
+  const inputType = e.target === emailInputEl ? 'email' : 'message';
+  const value = e.target.value.trim();
 
-function onTextareaInput(e) {
-  const message = e.currentTarget.value.trim();
+  const savedData = getFormDataFromLocalStorage();
+  savedData[inputType] = value;
 
-  localStorage.setItem(MESSAGE_STORAGE_KEY, message);
+  localStorage.setItem(LS_KEY, JSON.stringify(savedData));
 }
 
 function populateFormSubmit() {
-  const savedEmail = localStorage.getItem(EMAIL_STORAGE_KEY);
-  const savedMessage = localStorage.getItem(MESSAGE_STORAGE_KEY);
+  const savedData = getFormDataFromLocalStorage();
 
-  if (savedEmail) {
-    emailInputEl.value = savedEmail;
+  if (savedData.email) {
+    emailInputEl.value = savedData.email;
   }
 
-  if (savedMessage) {
-    textareaEl.value = savedMessage;
+  if (savedData.message) {
+    textareaEl.value = savedData.message;
   }
 }
+
+function getFormDataFromLocalStorage() {
+  const savedData = localStorage.getItem(LS_KEY);
+  return savedData ? JSON.parse(savedData) : {};
+}
+
+//? Поле для textarea
+
+const inputEl = document.querySelectorAll('.form-input');
+
+inputEl.forEach(function (element) {
+  element.addEventListener('focus', function onInputFocus(event) {
+    element.setAttribute('placeholder', 'Type area');
+  }),
+    element.addEventListener('blur', function onInputBlur(event) {
+      element.removeAttribute('placeholder');
+    });
+});
